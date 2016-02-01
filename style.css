@@ -1,0 +1,42 @@
+.code {
+    background-color: lightgrey;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.programInput {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    font-family: monospace;
+    font-size: 10pt;
+    display: inline-block;
+    /* float: left; */
+}
+
+.programOutput {
+    margin-left: auto;
+    margin-right: auto;
+    border-style: double;
+    background-color: lightgreen;
+    width: 50%;
+    font-family: monospace;
+    font-size: 10pt;
+    display: inline-block;
+    /* float: right; */
+}
+
+.solution {
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    display: none;
+    background-color: lightgrey;
+}
+
+.soluce {
+    background: transparent;
+    border: none !important;
+    font-size:0;
+}
