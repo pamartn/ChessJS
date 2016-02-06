@@ -1,0 +1,8 @@
+{
+	"name": "ChessJS",
+	"version": "0.1.0",
+	"dependencies": {
+		"express": "~4",
+		"socket.io": "~1.4"
+	}
+}
