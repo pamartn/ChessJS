@@ -64,15 +64,41 @@ Pawn.prototype.getMoves = function() {
 }
 
 
-// Constructeur du type Tower, observez attentivement l'appel au constructeur de Piece !
+// Constructeur du type Rook, observez attentivement l'appel au constructeur de Piece !
 // pieceId correspond aux coordonnées d'extraction des images du pion en blanc puis noir
-var Tower = function(color, line, column) {
-    Tower.prototype.constructor.call(this, 'Tower', color, line, column);
+var Rook = function(color, line, column) {
+    Rook.prototype.constructor.call(this, 'Rook', color, line, column);
     this.pieceId = [[240, 5], [720, 5]];
 }
-Tower.prototype = new Piece();
+Rook.prototype = new Piece();
 
+Rook.prototype.getMoves = function() {
+	var moves = [];
+	var up = true;
+	var down = true;
+	var left = true;
+	var right = true;
+	for(var i = 1; i < board.length; i++) {
+		if(down && isEmpty(this.line + i, this.column))
+			moves.push([this.line + i, this.column]);
+		else
+			down = false;
+		if(up && isEmpty(this.line - i, this.column))
+			moves.push([this.line - i, this.column]);
+		else
+			up = false;
+		if(right && isEmpty(this.line, this.column + i))
+			moves.push([this.line, this.column + i]);
+		else
+			right = false;
+		if(left && isEmpty(this.line, this.column - i))
+			moves.push([this.line, this.column - i]);
+		else
+			left = false;
 
+	}
+	return this.sortMoves(moves);
+}
 // Constructeur du type Knight, observez attentivement l'appel au constructeur de Piece !
 // pieceId correspond aux coordonnées d'extraction des images du pion en blanc puis noir
 var Knight = function(color, line, column) {
@@ -120,7 +146,7 @@ var createBoard = function(nbLine, nbColumn){
 	return b;
 } 
 var isEmpty = function(lig, col){
-	return board[lig][col].name === 'empty'; 
+	return lig >= 0 && col >= 0 && lig < board.length && col < board[0].length && board[lig][col].name === 'empty'; 
 }
 var move = function(lig, col, piece){
 	var x = piece.line;
@@ -142,11 +168,11 @@ var initBoard = function() {
 		board[1][i] = new Pawn('white', 1, i);
 		board[6][i] = new Pawn('black', 6, i);
 	}	
-	//Tower
-	board[0][0] = new Tower('white', 0, 0);
-	board[0][7] = new Tower('white', 0, 7);
-	board[7][0] = new Tower('black', 7, 0);
-	board[7][7] = new Tower('black', 7, 7);
+	//Rook
+	board[0][0] = new Rook('white', 0, 0);
+	board[0][7] = new Rook('white', 0, 7);
+	board[7][0] = new Rook('black', 7, 0);
+	board[7][7] = new Rook('black', 7, 7);
 	//Knight
 	board[0][1] = new Knight('white', 0, 1);
 	board[0][6] = new Knight('white', 0, 6);
@@ -225,7 +251,7 @@ var refreshView = function(){
 }
 var initGame = function(){
 	chessSymbols = new Image();
-	chessSymbols.src = 'chess.png';
+	chessSymbols.src = 'res/chess.png';
 	chessSymbols.onload = function() {
     		console.info("Chess symbols loaded !");
     		// dessine la grille, une fois l'image chargée
