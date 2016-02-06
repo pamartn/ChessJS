@@ -140,12 +140,12 @@ var initBoard = function() {
 	//Pawn
 	for(var i = 0; i < board.length; i++){
 		board[1][i] = new Pawn('white', 1, i);
-		//board[6][i] = new Pawn('black', 6, i);
+		board[6][i] = new Pawn('black', 6, i);
 	}	
 	//Tower
 	board[0][0] = new Tower('white', 0, 0);
 	board[0][7] = new Tower('white', 0, 7);
-	//board[7][0] = new Tower('black', 7, 0);
+	board[7][0] = new Tower('black', 7, 0);
 	board[7][7] = new Tower('black', 7, 7);
 	//Knight
 	board[0][1] = new Knight('white', 0, 1);
