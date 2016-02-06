@@ -107,7 +107,19 @@ var Knight = function(color, line, column) {
 }
 Knight.prototype = new Piece();
 
-
+Knight.prototype.getMoves = function() {
+	var moves = [];
+	var matrix = [[-2, -1], [2, -1], [1, -2], [1, 2]];
+	for(var i = 0; i < matrix.length; i++)
+		for(var j = 0; j < 2; j++) {
+			var sens = j === 0 ? 1 : -1;
+			var line = this.line + (matrix[i][0] * sens);
+			var column = this.column + (matrix[i][1] * sens);
+			if(isEmpty(line, column))
+				moves.push([line, column]);
+		}
+	return this.sortMoves(moves);
+}
 // Constructeur du type Bishop, observez attentivement l'appel au constructeur de Piece !
 // pieceId correspond aux coordonnées d'extraction des images du pion en blanc puis noir
 var Bishop = function(color, line, column) {
