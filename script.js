@@ -74,29 +74,17 @@ Rook.prototype = new Piece();
 
 Rook.prototype.getMoves = function() {
 	var moves = [];
-	var up = true;
-	var down = true;
-	var left = true;
-	var right = true;
-	for(var i = 1; i < board.length; i++) {
-		if(down && isEmpty(this.line + i, this.column))
-			moves.push([this.line + i, this.column]);
-		else
-			down = false;
-		if(up && isEmpty(this.line - i, this.column))
-			moves.push([this.line - i, this.column]);
-		else
-			up = false;
-		if(right && isEmpty(this.line, this.column + i))
-			moves.push([this.line, this.column + i]);
-		else
-			right = false;
-		if(left && isEmpty(this.line, this.column - i))
-			moves.push([this.line, this.column - i]);
-		else
-			left = false;
-
-	}
+	var matrix = [[1, 0, true], [-1, 0, true], [0, 1, true], [0, -1, true]];
+	for(var i = 1; i < board.length; i++)
+		for(var j = 0; j < matrix.length; j++){
+			var cell = matrix[j];
+			var line = this.line + (cell[0]*i);
+			var column = this.column + (cell[1]*i);
+			if(cell[2] && isEmpty(line, column))
+				moves.push([line, column]);
+			else
+				matrix[j][2] = false;
+		}
 	return this.sortMoves(moves);
 }
 // Constructeur du type Knight, observez attentivement l'appel au constructeur de Piece !
@@ -128,7 +116,21 @@ var Bishop = function(color, line, column) {
 }
 Bishop.prototype = new Piece();
 
-
+Bishop.prototype.getMoves = function() {
+	var moves = [];
+	var matrix = [[1, 1, true], [-1, -1, true], [-1, 1, true], [1, -1, true]];
+	for(var i = 1; i < board.length; i++)
+		for(var j = 0; j < matrix.length; j++){
+			var cell = matrix[j];
+			var line = this.line + (cell[0]*i);
+			var column = this.column + (cell[1]*i);
+			if(cell[2] && isEmpty(line, column))
+				moves.push([line, column]);
+			else
+				matrix[j][2] = false;
+		}
+	return this.sortMoves(moves);
+}
 // Constructeur du type King, observez attentivement l'appel au constructeur de Piece !
 // pieceId correspond aux coordonnées d'extraction des images du pion en blanc puis noir
 var King = function(color, line, column) {
@@ -137,6 +139,14 @@ var King = function(color, line, column) {
 }
 King.prototype = new Piece();
 
+King.prototype.getMoves = function() {
+	var moves = [];
+	for(var i = -1; i < 2; i++)
+		for(var j = -1; j < 2; j++)
+			if(isEmpty(i+this.line, j+this.column))
+				moves.push([i+this.line, j+this.column]);
+	return this.sortMoves(moves);
+}
 
 // Constructeur du type Queen, observez attentivement l'appel au constructeur de Piece !
 // pieceId correspond aux coordonnées d'extraction des images du pion en blanc puis noir
@@ -146,6 +156,21 @@ var Queen = function(color, line, column) {
 }
 Queen.prototype = new Piece();
 
+Queen.prototype.getMoves = function() {
+	var moves = [];
+	var matrix = [[1, 1, true], [-1, -1, true], [-1, 1, true], [1, -1, true], [1, 0, true], [-1, 0, true], [0, 1, true], [0, -1, true]];
+	for(var i = 1; i < board.length; i++)
+		for(var j = 0; j < matrix.length; j++){
+			var cell = matrix[j];
+			var line = this.line + (cell[0]*i);
+			var column = this.column + (cell[1]*i);
+			if(cell[2] && isEmpty(line, column))
+				moves.push([line, column]);
+			else
+				matrix[j][2] = false;
+		}
+	return this.sortMoves(moves);
+}
 
 var createBoard = function(nbLine, nbColumn){
 	var b = [];
