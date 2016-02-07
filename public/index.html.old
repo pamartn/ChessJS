@@ -1,14 +1,14 @@
 <html>
   <head>
-         <script src="/socket.io/socket.io.js"></script>
-  <script type='text/javascript' src='client.js'>
+  <script type='text/javascript' src='pieces.js'>
   </script>
+  <script type='text/javascript' src='core_game.js'>
+  </script>
+  <script type='text/javascript' src='script.js'>
+    </script>
   </head>
   <body>
     <center><h1>Chess JS</h1>
-	<span id="refresh"> Refresh list </span>
-	<div id="game_list"></div>
-
    <canvas id='screen' width='400' height='400' >JavaScript est nécessaire ...</canvas></center>
   </body>
 </html>
