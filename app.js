@@ -43,6 +43,12 @@ Game.prototype.remove = function(player){
 			}
 }
 
+Game.prototype.isPlaying = function(player){
+	if(this.white === player || this.black == player)
+		return true;
+	return false;
+}
+
 var games = [];
 
 io.sockets.on('connection', function (socket) {
@@ -51,20 +57,22 @@ io.sockets.on('connection', function (socket) {
 	socket.on('username', function(username) {
 		socket.p = new Player(username, socket);
 		socket.emit('game_list', games);
-	}
+	});
 	// Player wants to create a new game
 	socket.on('game_create', function(game_name) {
+		console.log("Creating new game : " + game_name);
 		// Create new games and push it to game list
 		socket.game = new Game(game_name, socket.p);
 		games.push(socket.game);
 		
 		// Notify player that he is connected
 		socket.emit('game_connect', socket.game);
-	}
+	});
 	// Player wants the game list
 	socket.on('game_list', function() {
+		console.log("request refresh");
 		socket.emit('game_list', games);
-	}
+	});
 	// Player wants to connect to a game
 	socket.on('game_connect', function(game_name) {
 		// Search game
@@ -77,10 +85,10 @@ io.sockets.on('connection', function (socket) {
 					break;
 				}
 			}
-	}
+	});
 	//Disconnect player
 	socket.on('disconnect', function () {
-		if(socket.game.isPlaying(socket.p))
+		if(socket.game && socket.game.isPlaying(socket.p))
 			socket.game.remove(socket.p);
 		socket.p = null;
 	});
