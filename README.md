@@ -1,3 +1,5 @@
+## EDIT : 
+I'm porting this game to NodeJS for network games ! (not working for the moment)
 # ChessJS
 
 A small chess game written in Javascript for school. Display is made through HTML5 Canvas.
